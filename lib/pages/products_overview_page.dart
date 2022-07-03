@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/product_item.dart';
 import '../models/product.dart';
 
 class ProductOverViewPage extends StatelessWidget {
@@ -55,7 +56,7 @@ class ProductOverViewPage extends StatelessWidget {
           mainAxisSpacing: 10.0,
         ),
         itemBuilder: (context, index) {
-          return Container();
+          return ProductItem(product: loadedProducts[index]);
         },
         itemCount: loadedProducts.length,
       ),

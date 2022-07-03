@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import './config/custom_theme_data.dart';
+import '../pages/products_overview_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,10 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
+      theme: customLightThemeData,
+      darkTheme: customDarkThemeData,
+      home: const ProductOverViewPage(),
     );
   }
 }
