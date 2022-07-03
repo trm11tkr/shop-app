@@ -47,7 +47,7 @@ class ProductOverViewPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('MyShop'),
       ),
-      body: ProductsGrid(loadedProducts: loadedProducts),
+      body:const ProductsGrid(),
     );
   }
 }
