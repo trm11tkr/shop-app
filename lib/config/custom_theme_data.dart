@@ -12,6 +12,18 @@ final customLightThemeData = ThemeData.light().copyWith(
       fontFamily: 'Arima',
     ),
   ),
+  popupMenuTheme: PopupMenuThemeData(
+    color: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    textStyle: const TextStyle(
+      fontSize: 18,
+      fontFamily: 'Arima',
+      fontWeight: FontWeight.w300,
+      color: Color(0xFFD000FF),
+    ),
+  ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     elevation: 5,
   ),
