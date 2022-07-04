@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './config/custom_theme_data.dart';
 import '../pages/products_overview_page.dart';
+import './pages/product_detail_page.dart';
+import './providers/products.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,34 +15,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: customLightThemeData,
-      darkTheme: customDarkThemeData,
-      home: const ProductOverViewPage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Shop App'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Shop App',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+    return ChangeNotifierProvider.value(
+      value: Products(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: customLightThemeData,
+        darkTheme: customDarkThemeData,
+        home: const ProductOverViewPage(),
+        routes: {ProductDetailPage.routeName: (context) => ProductDetailPage()},
       ),
     );
   }
