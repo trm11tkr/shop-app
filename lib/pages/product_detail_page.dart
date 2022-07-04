@@ -12,9 +12,7 @@ class ProductDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final String productId =
         ModalRoute.of(context)!.settings.arguments as String;
-    final loadedProduct = Provider.of<Products>(context)
-        .item
-        .firstWhere((product) => product.id == productId);
+    final loadedProduct = Provider.of<Products>(context).findById(productId);
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedProduct.title),
