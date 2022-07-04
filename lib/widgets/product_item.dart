@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../pages/product_detail_page.dart';
 import '../providers/product.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({Key? key, required this.product}) : super(key: key);
-
-  final Product product;
+  const ProductItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -36,7 +36,8 @@ class ProductItem extends StatelessWidget {
         ),
         child: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(ProductDetailPage.routeName, arguments: product.id);
+              Navigator.of(context).pushNamed(ProductDetailPage.routeName,
+                  arguments: product.id);
             },
             child: Image.network(product.imageUrl, fit: BoxFit.cover)),
       ),
