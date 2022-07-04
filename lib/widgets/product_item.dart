@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../pages/product_detail_page.dart';
-import '../models/product.dart';
+import '../providers/product.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({Key? key, required this.product}) : super(key: key);
