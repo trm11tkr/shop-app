@@ -10,6 +10,7 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     final String productId =
         ModalRoute.of(context)!.settings.arguments as String;
     final loadedProduct =
@@ -18,8 +19,37 @@ class ProductDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(loadedProduct.title),
       ),
-      body: Center(
-        child: Text(loadedProduct.description),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: mediaQuery.size.height * 0.4,
+              width: double.infinity,
+              child: Image.network(
+                loadedProduct.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '\$${loadedProduct.price}',
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              child: Text(
+                loadedProduct.description,
+                textAlign: TextAlign.center,
+                softWrap: true,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
