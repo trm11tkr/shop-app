@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './config/custom_theme_data.dart';
-import '../pages/products_overview_page.dart';
+import './pages/products_overview_page.dart';
 import './pages/product_detail_page.dart';
 import './providers/products.dart';
+import './providers/cart.dart';
+import './pages/cart_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,14 +17,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: Products(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: ((context) => Products()),
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => Cart()),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: customLightThemeData,
         darkTheme: customDarkThemeData,
         home: const ProductOverViewPage(),
-        routes: {ProductDetailPage.routeName: (context) => ProductDetailPage()},
+        routes: {
+          ProductDetailPage.routeName: (context) => const ProductDetailPage(),
+          CartPage.routeName: (context) => const CartPage(),
+        },
       ),
     );
   }
