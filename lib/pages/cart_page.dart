@@ -20,18 +20,27 @@ class CartPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
                   'Total: ',
                   style: TextStyle(fontSize: 20),
                 ),
-                const SizedBox(width: 10),
+                const Spacer(),
                 Chip(
-                  label: Text(
-                    '\$${cart.totalAmount}',
-                  ),
-                  backgroundColor: Theme.of(context).primaryColor,
+                  label: Text('\$${cart.totalAmount}',
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).textTheme.labelMedium?.color)),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'ORDER NOW',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
+                    ))
               ],
             ),
           ),

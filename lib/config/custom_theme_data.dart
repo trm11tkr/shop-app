@@ -39,6 +39,11 @@ final customLightThemeData = ThemeData.light().copyWith(
       fontFamily: 'KantumruyPro',
       fontWeight: FontWeight.w300,
     ),
+    labelMedium: TextStyle(
+      color: Colors.white,
+      fontSize: 18,
+      fontFamily: 'KantumruyPro',
+    ),
   ),
 );
 
@@ -68,6 +73,11 @@ final customDarkThemeData = ThemeData.dark().copyWith(
       fontSize: 18,
       fontFamily: 'KantumruyPro',
       fontWeight: FontWeight.w300,
+    ),
+    labelMedium: TextStyle(
+      color: Colors.black,
+      fontSize: 18,
+      fontFamily: 'KantumruyPro',
     ),
   ),
 );
