@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
+import '../widgets/cart_item.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -35,14 +36,28 @@ class CartPage extends StatelessWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
                 TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'ORDER NOW',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary),
-                    ))
+                  onPressed: () {},
+                  child: Text(
+                    'ORDER NOW',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 15),
+                  ),
+                ),
               ],
             ),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return CartItemTile(
+                id: cart.items.values.toList()[index].id,
+                title: cart.items.values.toList()[index].title,
+                quantity: cart.items.values.toList()[index].quantity,
+                price: cart.items.values.toList()[index].price ,
+              );
+            },
+            itemCount: cart.itemCount,
           ),
         ),
       ]),
