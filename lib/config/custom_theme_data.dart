@@ -11,6 +11,11 @@ final customLightThemeData = ThemeData.light().copyWith(
       fontSize: 24,
       fontFamily: 'Arima',
     ),
+    toolbarTextStyle: TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontFamily: 'Arima',
+    ),
   ),
   popupMenuTheme: PopupMenuThemeData(
     color: Colors.white,
