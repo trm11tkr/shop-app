@@ -3,11 +3,16 @@ import 'package:intl/intl.dart';
 
 import '../providers/orders.dart';
 
-class OrderItemTile extends StatelessWidget {
+class OrderItemTile extends StatefulWidget {
   const OrderItemTile({Key? key, required this.order}) : super(key: key);
 
   final OrderItem order;
 
+  @override
+  State<OrderItemTile> createState() => _OrderItemTileState();
+}
+
+class _OrderItemTileState extends State<OrderItemTile> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -15,11 +20,11 @@ class OrderItemTile extends StatelessWidget {
       child: Column(children: [
         ListTile(
           title: Text(
-            '\$${order.amount}',
+            '\$${widget.order.amount}',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           subtitle: Text(
-            DateFormat('dd/MM/yyy/hh:mm').format(order.dateTime),
+            DateFormat('dd/MM/yyy/hh:mm').format(widget.order.dateTime),
           ),
           trailing: IconButton(
             icon: const Icon(Icons.expand_more),
