@@ -13,6 +13,8 @@ class OrderItemTile extends StatefulWidget {
 }
 
 class _OrderItemTileState extends State<OrderItemTile> {
+  bool _expanded = false;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -27,8 +29,12 @@ class _OrderItemTileState extends State<OrderItemTile> {
             DateFormat('dd/MM/yyy/hh:mm').format(widget.order.dateTime),
           ),
           trailing: IconButton(
-            icon: const Icon(Icons.expand_more),
-            onPressed: () {},
+            icon: Icon( _expanded ? Icons.expand_less : Icons.expand_more),
+            onPressed: () {
+              setState(() {
+                _expanded = !_expanded;
+              });
+            },
           ),
         )
       ]),
