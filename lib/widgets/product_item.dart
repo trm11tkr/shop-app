@@ -36,7 +36,8 @@ class ProductItem extends StatelessWidget {
               cart.addItem(product.id, product.price, product.title);
               // Scaffold.of(context) is connection to nearest Scaffold(controls page)
               // In this case, that of ProductsOverViewPage applies.
-              Scaffold.of(context).showSnackBar(
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text(
                     'Added item to cart!',
@@ -45,7 +46,9 @@ class ProductItem extends StatelessWidget {
                   duration: const Duration(seconds: 2),
                   action: SnackBarAction(
                     label: 'UNDO',
-                    onPressed: () {},
+                    onPressed: () {
+                      cart.removeSingleItem(product.id);
+                    },
                   ),
                 ),
               );
