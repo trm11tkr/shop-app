@@ -25,9 +25,16 @@ class UserProductsPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
           itemBuilder: ((_, index) {
-            return UserProductItem(
-                title: productsData.items[index].title,
-                imageUrl: productsData.items[index].imageUrl);
+            return Column(
+              children: [
+                UserProductItem(
+                    title: productsData.items[index].title,
+                    imageUrl: productsData.items[index].imageUrl),
+                const Divider(
+                  thickness: 2,
+                ),
+              ],
+            );
           }),
           itemCount: productsData.items.length,
         ),
