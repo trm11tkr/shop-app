@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../providers/product.dart';
+
 class EditProductPage extends StatefulWidget {
   const EditProductPage({Key? key}) : super(key: key);
   static const routeName = 'edit-product';
@@ -14,6 +16,9 @@ class _EditProductPageState extends State<EditProductPage> {
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
+  final _form = GlobalKey<FormState>();
+  var _editedProduct =
+      Product(id: '', title: '', description: '', price: 0, imageUrl: '');
 
   @override
   void initState() {
@@ -37,15 +42,26 @@ class _EditProductPageState extends State<EditProductPage> {
     }
   }
 
+  void _saveForm() {
+    _form.currentState?.save();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Product'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _form,
           child: ListView(
             children: [
               TextFormField(
@@ -54,6 +70,9 @@ class _EditProductPageState extends State<EditProductPage> {
                 style: Theme.of(context).textTheme.bodyMedium,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
+                },
+                onSaved: (value) {
+                  _editedProduct = _editedProduct.copyWith(title: value);
                 },
               ),
               TextFormField(
@@ -66,6 +85,12 @@ class _EditProductPageState extends State<EditProductPage> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
                 },
+                onSaved: (value) {
+                  if (value != null) {
+                    _editedProduct =
+                        _editedProduct.copyWith(price: int.parse(value));
+                  }
+                },
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Description'),
@@ -73,6 +98,9 @@ class _EditProductPageState extends State<EditProductPage> {
                 style: Theme.of(context).textTheme.bodyMedium,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                onSaved: (value) {
+                  _editedProduct = _editedProduct.copyWith(description: value);
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -93,7 +121,10 @@ class _EditProductPageState extends State<EditProductPage> {
                           )
                         : FittedBox(
                             fit: BoxFit.fill,
-                            child: Image.network(_imageUrlController.text, fit: BoxFit.cover,),
+                            child: Image.network(
+                              _imageUrlController.text,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                   ),
                   Expanded(
@@ -104,6 +135,13 @@ class _EditProductPageState extends State<EditProductPage> {
                       textInputAction: TextInputAction.done,
                       controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
+                      onSaved: (value) {
+                        _editedProduct =
+                            _editedProduct.copyWith(imageUrl: value);
+                      },
+                      onEditingComplete: () {
+                        _saveForm();
+                      },
                     ),
                   ),
                 ],
