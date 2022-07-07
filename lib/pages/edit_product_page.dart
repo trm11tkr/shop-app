@@ -38,11 +38,23 @@ class _EditProductPageState extends State<EditProductPage> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
+      if (_imageUrlController.text.isEmpty ||
+          (!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
       setState(() {});
     }
   }
 
   void _saveForm() {
+    final isValid = _form.currentState?.validate() ?? false;
+    if (!isValid) {
+      return;
+    }
     _form.currentState?.save();
   }
 
@@ -71,6 +83,12 @@ class _EditProductPageState extends State<EditProductPage> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
                 },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please set the title!';
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = _editedProduct.copyWith(title: value);
                 },
@@ -85,6 +103,19 @@ class _EditProductPageState extends State<EditProductPage> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
                 },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please set the price!';
+                  }
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number!';
+                  }
+                  if (int.parse(value) <= 0) {
+                    return 'Please enter a number greater than zero!';
+                  }
+
+                  return null;
+                },
                 onSaved: (value) {
                   if (value != null) {
                     _editedProduct =
@@ -98,6 +129,15 @@ class _EditProductPageState extends State<EditProductPage> {
                 style: Theme.of(context).textTheme.bodyMedium,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please set the description!';
+                  }
+                  if (value.length <= 10) {
+                    return 'Should be at least 10 characters long!';
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = _editedProduct.copyWith(description: value);
                 },
@@ -135,6 +175,23 @@ class _EditProductPageState extends State<EditProductPage> {
                       textInputAction: TextInputAction.done,
                       controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please set the image URL!';
+                        }
+
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
+                          return 'Please enter a valid URL';
+                        }
+
+                        if (!value.endsWith('.png') &&
+                            !value.endsWith('.jpg') &&
+                            !value.endsWith('.jpeg')) {
+                          return 'Please enter a valid image URL';
+                        }
+                        return null;
+                      },
                       onSaved: (value) {
                         _editedProduct =
                             _editedProduct.copyWith(imageUrl: value);
