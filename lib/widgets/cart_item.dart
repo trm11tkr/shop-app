@@ -20,7 +20,7 @@ class CartItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible( 
+    return Dismissible(
       // Dismissibleにすることで削除可能に
       key: ValueKey(id),
       background: Container(
@@ -35,9 +35,39 @@ class CartItemTile extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text(
+                'Are you sure?',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              content: Text(
+                'Do you wat to remove the item from the cart?',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              actions: [
+                TextButton(
+                  child: const Text('No'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop(false);
+                  },
+                ),
+                TextButton(
+                  child: const Text('Yes'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop(true);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
       onDismissed: (_) {
-        Provider.of<Cart>(context, listen: false)
-            .removeItem(productId);
+        Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(
