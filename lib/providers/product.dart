@@ -18,6 +18,7 @@ class Product with ChangeNotifier {
   final String imageUrl;
   bool isFavorite;
 
+  
   void toggleFavoriteStatus() {
     isFavorite = !isFavorite;
     notifyListeners();

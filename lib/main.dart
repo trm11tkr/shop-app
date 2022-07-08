@@ -23,12 +23,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // 商品
         ChangeNotifierProvider(
           create: ((context) => Products()),
         ),
+        // カート
         ChangeNotifierProvider(
           create: ((context) => Cart()),
         ),
+        // 注文
         ChangeNotifierProvider(
           create: ((context) => Orders()),
         ),
@@ -38,6 +41,7 @@ class MyApp extends StatelessWidget {
         theme: customLightThemeData,
         darkTheme: customDarkThemeData,
         home: const ProductOverViewPage(),
+        // ルートの定義
         routes: {
           ProductDetailPage.routeName: (context) => const ProductDetailPage(),
           CartPage.routeName: (context) => const CartPage(),
