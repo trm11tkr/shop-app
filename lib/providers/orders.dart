@@ -17,12 +17,13 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
-  List<OrderItem> _orders = [];
+  final List<OrderItem> _orders = [];
 
   List<OrderItem> get orders {
     return [..._orders];
   }
 
+  // 注文履歴に追加
   void addOrders(List<CartItem> cartProducts, int total) {
     _orders.insert(
       0,

@@ -31,6 +31,7 @@ class _ProductOverViewPageState extends State<ProductOverViewPage> {
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
               setState(() {
+                // 商品表示のフィルター
                 if (selectedValue == FilterOptions.favorites) {
                   _showOnlyFavorites = true;
                 } else {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
+  final List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -48,5 +48,33 @@ class Products with ChangeNotifier {
 
   Product findById(String id) {
     return _items.firstWhere((product) => product.id == id);
+  }
+
+  // 新規商品の登録
+  void addProduct(Product product) {
+    final newProduct = Product(
+      id: DateTime.now().toString(),
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    );
+    _items.add(newProduct);
+    notifyListeners();
+  }
+
+  // 既存商品の修正
+  void updateProduct(String id, Product newProduct) {
+    final productIndex = _items.indexWhere((p) => p.id == id);
+    if (productIndex >= 0) {
+      _items[productIndex] = newProduct;
+      notifyListeners();
+    }
+  }
+
+  // 商品の削除
+  void deleteProduct(String id) {
+    _items.removeWhere((p) => p.id == id);
+    notifyListeners();
   }
 }
