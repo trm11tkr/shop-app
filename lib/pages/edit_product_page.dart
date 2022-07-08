@@ -14,12 +14,14 @@ class EditProductPage extends StatefulWidget {
 }
 
 class _EditProductPageState extends State<EditProductPage> {
+  // オートフォーカスのために各TextFormに設定
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
-  final _form = GlobalKey<FormState>();
+  final _form = GlobalKey<FormState>(); // FormにアクセスするためのKey
   var _editedProduct = Product(
+    // 商品の初期化
     id: 'nothing',
     title: '',
     description: '',
@@ -34,12 +36,16 @@ class _EditProductPageState extends State<EditProductPage> {
   };
   var _isInit = true;
 
+  // 初回build時のみ呼ばれる
   @override
   void initState() {
+    // imageUrlFocusNodeのフォーカスを監視
+    // 変化があれば`_updateImageUrl`を呼び出し
     _imageUrlFocusNode.addListener(_updateImageUrl);
     super.initState();
   }
 
+  // Stateオブジェクトの依存関係が変更された時に呼び出し
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -60,6 +66,7 @@ class _EditProductPageState extends State<EditProductPage> {
     super.didChangeDependencies();
   }
 
+  // メモリリークを防止
   @override
   void dispose() {
     _imageUrlFocusNode.removeListener(_updateImageUrl);
@@ -70,6 +77,8 @@ class _EditProductPageState extends State<EditProductPage> {
     super.dispose();
   }
 
+  // imageUrlのテキストフィールドからフォーカスノードが変更された時に
+  // previewを表示
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
       if (_imageUrlController.text.isEmpty ||
@@ -84,12 +93,15 @@ class _EditProductPageState extends State<EditProductPage> {
     }
   }
 
+  // フォームの保存
   void _saveForm() {
+    // バリデーションチェック
     final isValid = _form.currentState?.validate() ?? false;
     if (!isValid) {
       return;
     }
     _form.currentState?.save();
+    // 新規 or 既存 商品の判定
     if (_editedProduct.id != 'nothing') {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);

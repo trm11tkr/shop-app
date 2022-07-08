@@ -18,12 +18,12 @@ class Product with ChangeNotifier {
   final String imageUrl;
   bool isFavorite;
 
-  
+  // お気に入り商品の変更メソッド
   void toggleFavoriteStatus() {
     isFavorite = !isFavorite;
     notifyListeners();
   }
-
+  
   Product copyWith({
     String? id,
     String? title,

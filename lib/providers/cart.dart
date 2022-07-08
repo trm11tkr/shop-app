@@ -26,6 +26,7 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
+  // 合計料金を計算
   int get totalAmount {
     int total = 0;
     _items.forEach((key, cartItem) {
@@ -33,12 +34,13 @@ class Cart with ChangeNotifier {
     });
     return total;
   }
-
+  // 商品の追加
   void addItem(
     String productId,
     int price,
     String title,
   ) {
+    // カートに既に登録してあるか99人
     if (_items.containsKey(productId)) {
       _items.update(
         productId,
@@ -62,11 +64,13 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  // カートから削除
   void removeItem(String id) {
     _items.remove(id);
     notifyListeners();
   }
 
+  // カートへの追加をキャンセル
   void removeSingleItem(String id) {
     if (!_items.containsKey(id)) {
       return;
@@ -86,6 +90,7 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  // カートの中身をクリア
   void clear() {
     _items = {};
     notifyListeners();
