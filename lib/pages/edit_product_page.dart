@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
+import '../providers/products.dart';
 
 class EditProductPage extends StatefulWidget {
   const EditProductPage({Key? key}) : super(key: key);
@@ -56,6 +58,8 @@ class _EditProductPageState extends State<EditProductPage> {
       return;
     }
     _form.currentState?.save();
+    Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -65,7 +69,9 @@ class _EditProductPageState extends State<EditProductPage> {
         title: const Text('Edit Product'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _saveForm();
+            },
             icon: const Icon(Icons.save),
           ),
         ],
